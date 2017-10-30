@@ -1,0 +1,7 @@
+FROM scratch
+
+COPY bin/server bookshelfserver
+
+EXPOSE 8080
+
+CMD ["./bookshelfserver"]
