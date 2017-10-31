@@ -12,9 +12,7 @@ services:
     depends_on:
       - db
   db:
-    build:
-      context: .
-      dockerfile: data/Dockerfile.db
+    image: mysql:5.7
     ports:
       - "3306:3306" 
     volumes:

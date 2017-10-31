@@ -2,21 +2,19 @@ PROJECT = bookshelf
 WORKDIR = /go/src/github.com/nicovogelaar/$(PROJECT)
 PKGS = ./app ./bookshelf
 
-all: glide-install build-image-builder build start
+all: glide-install builder build up
 
-start:
+up:
 	docker-compose up -d
 
-stop:
+down:
 	docker-compose down
 
-compose-server: build
-	docker-compose build server
-	docker-compose up server
+server:
+	docker-compose up --build server
 
-compose-db:
-	docker-compose build db
-	docker-compose up db
+db:
+	docker-compose up --build db
 
 build:
 	docker run --rm -it \
@@ -37,10 +35,14 @@ test:
 		-v $(PWD):$(WORKDIR) \
 		-w $(WORKDIR) \
 		$(PROJECT)-builder \
-		go test $(PKGS)
+		/bin/bash -c "golint $(PKGS); go test $(PKGS)"
 
-build-image-builder:
-	docker build -t $(PROJECT)-builder -f data/Dockerfile.builder .
+test-travis:
+	golint $(PKGS)
+	go test $(PKGS)
+
+builder:
+	docker build -t $(PROJECT)-builder -f data/Dockerfile.build .
 
 clean:
 	rm -r vendor/
