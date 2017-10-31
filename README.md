@@ -1,4 +1,4 @@
-# Bookshelf
+# Bookshelf [![Build Status](https://travis-ci.org/nicovogelaar/bookshelf.svg?branch=master)](https://travis-ci.org/nicovogelaar/bookshelf)
 
 This is a simple bookshelf application written in golang.
 
